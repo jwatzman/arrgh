@@ -2,7 +2,7 @@ import React from 'react';
 
 import Nav from './Nav';
 import PostList from './PostList';
-import {RankingType, CommentRanking, ViewConfig} from './AppState';
+import {CommentRanking, RankingType, ViewConfig} from './AppState';
 
 export default function App() {
 	const initViewConfig: ViewConfig = { // TODO: load from URL
