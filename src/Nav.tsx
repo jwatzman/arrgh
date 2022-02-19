@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {ViewConfig} from './ViewConfig';
+import {ViewConfig} from './AppState';
 
 type Props = {
 	initViewConfig: ViewConfig,

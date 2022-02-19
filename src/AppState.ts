@@ -39,3 +39,8 @@ export type ViewConfig = {
 	ranking: Ranking,
 	commentRanking: CommentRanking,
 }
+
+export type AppState = {
+	viewConfig: ViewConfig,
+	post: string | null,
+}

@@ -1,8 +1,11 @@
 import React from 'react';
 
-import {ViewConfig} from './ViewConfig';
+import {AppState} from './AppState';
 
-type Props = {viewConfig: ViewConfig};
-export default function PostList({viewConfig}: Props) {
+type Props = {
+	appState: AppState,
+	setPost: (s: string) => void,
+};
+export default function PostList({appState, setPost}: Props) {
 	return <div>Post list</div>;
 }
