@@ -1,4 +1,3 @@
-import {Map, Set} from 'immutable';
 import React from 'react';
 
 import {
@@ -8,6 +7,7 @@ import {
 	TopTime,
 	ViewConfig,
 } from './AppState';
+import useFetchCachedUrl from './useFetchCachedUrl';
 
 type PostListJson = {
 	data: {
@@ -58,6 +58,10 @@ function getRankingUrlComponent(r: Ranking): string {
 }
 
 function getRedditJsonUrl(viewConfig: ViewConfig) {
+	if (viewConfig.subreddit === '') {
+		return null;
+	}
+
 	return 'https://www.reddit.com/r/'
 		+ viewConfig.subreddit
 		+ getRankingUrlComponent(viewConfig.ranking);
@@ -65,38 +69,19 @@ function getRedditJsonUrl(viewConfig: ViewConfig) {
 
 export default function PostList({appState, setPost}: Props) {
 	const url = getRedditJsonUrl(appState.viewConfig);
+	const postList = useFetchCachedUrl<PostListJson>(url);
 
-	const [fetchStarted, setFetchStarted] = React.useState(Set());
-	const [postListsJson, setPostListsJson] =
-		React.useState<Map<string, PostListJson>>(Map());
-
-	React.useEffect(() => {
-		if (appState.viewConfig.subreddit === '') {
-			return;
-		}
-
-		if (fetchStarted.has(url)) {
-			return;
-		}
-
-		setFetchStarted(s => s.add(url));
-		fetch(url)
-			.then(r => r.json())
-			.then(j => setPostListsJson(m => m.set(url, j)))
-			.catch(e => console.log(e)); // XXX
-	}, [appState.viewConfig.subreddit, fetchStarted, url]);
-
-	if (appState.viewConfig.subreddit === '') {
+	if (url === null) {
 		return null;
 	}
 
-	if (!postListsJson.has(url)) {
+	if (postList === null) {
 		return <div>Loading...</div>;
 	}
 
 	return (
 		<ol>
-			{postListsJson.get(url)!.data.children.map(
+			{postList.data.children.map(
 				d => <li key={d.data.id}>{d.data.ups} - {d.data.title}</li>
 			)}
 		</ol>
