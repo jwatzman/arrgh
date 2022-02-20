@@ -19,11 +19,15 @@ export default function App() {
 
 	const appState = {viewConfig, post};
 
-  return (
+	// Note that we always render both the Post and the PostList, and leave it up
+	// to both of them as to when to render a non-empty result or not. This is so
+	// we don't unmount/remount those components during navigation, thus
+	// resetting all the useState cached data.
+	return (
 		<div>
 			<Nav initViewConfig={initViewConfig} setViewConfig={setViewConfig} />
 			<hr />
 			<PostList appState={appState} setPost={setPost} />
 		</div>
-  );
+	);
 }
