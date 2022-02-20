@@ -9,6 +9,21 @@ import {
 	ViewConfig,
 } from './AppState';
 
+type PostListJson = {
+	data: {
+		children: {
+			data: {
+				created: number,
+				id: string,
+				selftext: string,
+				stickied: boolean,
+				title: string,
+				ups: number,
+			},
+		}[],
+	},
+};
+
 type Props = {
 	appState: AppState,
 	setPost: (s: string) => void,
@@ -52,7 +67,8 @@ export default function PostList({appState, setPost}: Props) {
 	const url = getRedditJsonUrl(appState.viewConfig);
 
 	const [fetchStarted, setFetchStarted] = React.useState(Set());
-	const [postListsJson, setPostListsJson] = React.useState(Map());
+	const [postListsJson, setPostListsJson] =
+		React.useState<Map<string, PostListJson>>(Map());
 
 	React.useEffect(() => {
 		if (appState.viewConfig.subreddit === '') {
@@ -80,7 +96,7 @@ export default function PostList({appState, setPost}: Props) {
 
 	return (
 		<ol>
-			{postListsJson.get(url).data.children.map(
+			{postListsJson.get(url)!.data.children.map(
 				d => <li key={d.data.id}>{d.data.ups} - {d.data.title}</li>
 			)}
 		</ol>
