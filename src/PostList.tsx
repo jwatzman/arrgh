@@ -8,12 +8,12 @@ import {
 	ViewConfig,
 } from './AppState';
 import PostListItem from './PostListItem';
-import {PostListJson} from './ResultJson';
+import {PostJson, PostListJson} from './ResultJson';
 import useFetchCachedUrl from './useFetchCachedUrl';
 
 type Props = {
 	appState: AppState,
-	setPost: (s: string) => void,
+	onClickPost: (s: PostJson) => void,
 };
 
 function getTopTimeUrlComponent(t: TopTime): string {
@@ -54,11 +54,15 @@ function getRedditJsonUrl(viewConfig: ViewConfig) {
 		+ getRankingUrlComponent(viewConfig.ranking);
 }
 
-export default function PostList({appState, setPost}: Props) {
+export default function PostList({appState, onClickPost}: Props) {
 	const url = getRedditJsonUrl(appState.viewConfig);
 	const postList = useFetchCachedUrl<PostListJson>(url);
 
 	if (url === null) {
+		return null;
+	}
+
+	if (appState.post !== null) {
 		return null;
 	}
 
@@ -69,7 +73,14 @@ export default function PostList({appState, setPost}: Props) {
 	return (
 		<ol>
 			{postList.data.children.map(
-				d => <PostListItem key={d.data.id} post={d.data} />
+				d => <PostListItem
+					key={d.data.id}
+					post={d.data}
+					onClick={e => {
+						e.preventDefault();
+						onClickPost(d.data);
+					}}
+				/>
 			)}
 		</ol>
 	);

@@ -1,8 +1,10 @@
 import React from 'react';
 
-import Nav from './Nav';
-import PostList from './PostList';
 import {CommentRanking, RankingType, ViewConfig} from './AppState';
+import Nav from './Nav';
+import Post from './Post';
+import PostList from './PostList';
+import {PostJson} from './ResultJson';
 
 export default function App() {
 	const initViewConfig: ViewConfig = { // TODO: load from URL
@@ -15,7 +17,7 @@ export default function App() {
 
 	// TODO: save to URL
 	const [viewConfig, setViewConfig] = React.useState(initViewConfig);
-	const [post, setPost] = React.useState<string|null>(null);
+	const [post, setPost] = React.useState<PostJson|null>(null);
 
 	const appState = {viewConfig, post};
 
@@ -27,7 +29,14 @@ export default function App() {
 		<div>
 			<Nav initViewConfig={initViewConfig} setViewConfig={setViewConfig} />
 			<hr />
-			<PostList appState={appState} setPost={setPost} />
+			<PostList appState={appState} onClickPost={setPost} />
+			<Post
+				onClickClose={e => {
+					e.preventDefault();
+					setPost(null);
+				}}
+				post={post}
+			/>
 		</div>
 	);
 }

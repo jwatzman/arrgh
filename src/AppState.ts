@@ -1,3 +1,5 @@
+import {PostJson} from './ResultJson';
+
 export enum TopTime {
 	HOUR = 'Hour',
 	DAY = 'Day',
@@ -42,5 +44,5 @@ export type ViewConfig = {
 
 export type AppState = {
 	viewConfig: ViewConfig,
-	post: string | null,
+	post: PostJson | null,
 }
