@@ -7,22 +7,9 @@ import {
 	TopTime,
 	ViewConfig,
 } from './AppState';
+import PostListItem from './PostListItem';
+import {PostListJson} from './ResultJson';
 import useFetchCachedUrl from './useFetchCachedUrl';
-
-type PostListJson = {
-	data: {
-		children: {
-			data: {
-				created: number,
-				id: string,
-				selftext: string,
-				stickied: boolean,
-				title: string,
-				ups: number,
-			},
-		}[],
-	},
-};
 
 type Props = {
 	appState: AppState,
@@ -82,7 +69,7 @@ export default function PostList({appState, setPost}: Props) {
 	return (
 		<ol>
 			{postList.data.children.map(
-				d => <li key={d.data.id}>{d.data.ups} - {d.data.title}</li>
+				d => <PostListItem key={d.data.id} post={d.data} />
 			)}
 		</ol>
 	);
