@@ -14,3 +14,28 @@ export type PostListJson = {
 		}[],
 	},
 };
+
+export type CommentJson = {
+	author: string,
+	body: string,
+	created: number,
+	id: string,
+	replies: {
+		data: {
+			children: {
+				data: CommentJson,
+			}[],
+		}
+	},
+	ups: number,
+};
+
+export type CommentListJson = {
+	1: {
+		data: {
+			children: {
+				data: CommentJson,
+			}[],
+		},
+	},
+};
