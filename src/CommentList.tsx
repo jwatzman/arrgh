@@ -1,26 +1,28 @@
 import React from 'react';
 
 import Comment from './Comment';
-import {CommentJson, CommentJsonChild} from './ResultJson';
+import {CommentJsonChild} from './ResultJson';
 
 type Props = {
 	comments: CommentJsonChild[],
 };
 
-export default function CommentList({comments}: Props) {
-	const commentData = comments.map(
-		c => c.kind === "more" ? null : c.data
-	).filter(
-		(x): x is CommentJson => x !== null
-	);
+function CommentMore() {
+	return <li>(More...)</li>;
+}
 
-	if (commentData.length === 0) {
+export default function CommentList({comments}: Props) {
+	if (comments.length === 0) {
 		return null;
 	}
 
 	return (
 		<ol>
-			{commentData.map(c => <Comment key={c.id} comment={c} />)}
+			{comments.map(
+				c => c.kind === "more"
+					? <CommentMore key="more" />
+					: <Comment key={c.data.id} comment={c.data} />
+			)}
 		</ol>
 	);
 }

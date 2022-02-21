@@ -1,5 +1,6 @@
 import React from 'react';
 
+import CommentList from './CommentList';
 import {CommentJson} from './ResultJson';
 
 type Props = {
@@ -7,5 +8,14 @@ type Props = {
 };
 
 export default function Comment({comment}: Props) {
-	return <li>{comment.body}</li>;
+	const replies = comment.replies === ""
+		? null
+		: <CommentList comments={comment.replies.data.children} />;
+
+	return (
+		<li>
+			<div>{comment.body}</div>
+			{replies}
+		</li>
+	);
 }
