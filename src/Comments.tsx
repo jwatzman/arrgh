@@ -45,6 +45,6 @@ export default function Comments() {
 	}
 
 	return <CommentList
-		comments={commentList[1].data.children.map(c => c.data)}
+		comments={commentList[1].data.children}
 	/>;
 }

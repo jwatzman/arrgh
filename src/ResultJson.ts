@@ -15,6 +15,17 @@ export type PostListJson = {
 	},
 };
 
+type CommentJsonChildComment = {
+	kind: "t1",
+	data: CommentJson,
+};
+
+type CommentJsonChildMore = {
+	kind: "more",
+};
+
+export type CommentJsonChild = CommentJsonChildComment | CommentJsonChildMore;
+
 export type CommentJson = {
 	author: string,
 	body: string,
@@ -22,20 +33,16 @@ export type CommentJson = {
 	id: string,
 	replies: {
 		data: {
-			children: {
-				data: CommentJson,
-			}[],
+			children: CommentJsonChild[],
 		}
-	},
+	} | "",
 	ups: number,
 };
 
 export type CommentListJson = {
 	1: {
 		data: {
-			children: {
-				data: CommentJson,
-			}[],
+			children: CommentJsonChild[],
 		},
 	},
 };
