@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {
-	AppState,
+	AppStateContext,
 	Ranking,
 	RankingType,
 	TopTime,
@@ -12,7 +12,6 @@ import {PostJson, PostListJson} from './ResultJson';
 import useFetchCachedUrl from './useFetchCachedUrl';
 
 type Props = {
-	appState: AppState,
 	onClickPost: (s: PostJson) => void,
 };
 
@@ -54,7 +53,8 @@ function getRedditJsonUrl(viewConfig: ViewConfig) {
 		+ getRankingUrlComponent(viewConfig.ranking);
 }
 
-export default function PostList({appState, onClickPost}: Props) {
+export default function PostList({onClickPost}: Props) {
+	const appState = React.useContext(AppStateContext);
 	const url = getRedditJsonUrl(appState.viewConfig);
 	const postList = useFetchCachedUrl<PostListJson>(url);
 

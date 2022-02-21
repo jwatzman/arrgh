@@ -1,14 +1,20 @@
 import React from 'react';
 
-import {CommentRanking, RankingType, TopTime, ViewConfig} from './AppState';
+import {
+	AppStateContext,
+	CommentRanking,
+	RankingType,
+	TopTime,
+	ViewConfig,
+} from './AppState';
 import SelectEnum from './SelectEnum';
 
 type Props = {
-	initViewConfig: ViewConfig,
 	setViewConfig: (s: ViewConfig) => void,
 };
 
-export default function Nav({initViewConfig, setViewConfig}: Props) {
+export default function Nav({setViewConfig}: Props) {
+	const initViewConfig = React.useContext(AppStateContext).viewConfig;
 	const [subreddit, setSubreddit] = React.useState(initViewConfig.subreddit);
 
 	const initRanking = initViewConfig.ranking;

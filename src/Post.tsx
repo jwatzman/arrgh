@@ -1,13 +1,13 @@
 import React from 'react';
 
-import {PostJson} from './ResultJson';
+import {AppStateContext} from './AppState';
 
 type Props = {
-	post: PostJson|null,
 	onClickClose: (e: React.SyntheticEvent) => void,
 };
 
-export default function Post({post, onClickClose}: Props) {
+export default function Post({onClickClose}: Props) {
+	const post = React.useContext(AppStateContext).post;
 	if (post === null) {
 		return null;
 	}

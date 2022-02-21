@@ -1,3 +1,5 @@
+import React from 'react';
+
 import {PostJson} from './ResultJson';
 
 export enum TopTime {
@@ -46,3 +48,16 @@ export type AppState = {
 	viewConfig: ViewConfig,
 	post: PostJson | null,
 }
+
+export const defaultAppState: AppState = {
+	viewConfig: {
+		subreddit: '',
+		ranking: {
+			type: RankingType.HOT,
+		},
+		commentRanking: CommentRanking.BEST,
+	},
+	post: null,
+};
+
+export const AppStateContext = React.createContext(defaultAppState);
