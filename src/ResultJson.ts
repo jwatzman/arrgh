@@ -1,6 +1,8 @@
 export type PostJson = {
+	author: string,
 	created: number,
 	id: string,
+	num_comments: number,
 	selftext: string,
 	stickied: boolean,
 	title: string,

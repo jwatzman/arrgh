@@ -11,6 +11,8 @@ import PostListItem from './PostListItem';
 import {PostJson, PostListJson} from './ResultJson';
 import useFetchCachedUrl from './useFetchCachedUrl';
 
+import Styles from './PostList.module.css';
+
 type Props = {
 	onClickPost: (s: PostJson) => void,
 };
@@ -71,7 +73,7 @@ export default function PostList({onClickPost}: Props) {
 	}
 
 	return (
-		<ol>
+		<ol className={Styles.list}>
 			{postList.data.children.map(
 				d => <PostListItem
 					key={d.data.id}
