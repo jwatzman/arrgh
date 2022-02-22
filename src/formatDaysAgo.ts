@@ -1,0 +1,27 @@
+const SEC_IN_MIN = 60;
+const MIN_IN_HOUR = 60;
+const HOUR_IN_DAY = 24;
+const DAY_IN_YEAR = 365; // Close enough.
+
+const SEC_IN_HOUR = SEC_IN_MIN * MIN_IN_HOUR;
+const SEC_IN_DAY = SEC_IN_HOUR * HOUR_IN_DAY;
+const SEC_IN_YEAR = SEC_IN_DAY * DAY_IN_YEAR;
+
+const agoTable = [
+	{t: SEC_IN_YEAR, s: "year"},
+	{t: SEC_IN_DAY, s: "day"},
+	{t: SEC_IN_HOUR, s: "hour"},
+	{t: 0, s: "second"},
+];
+
+export default function formatDaysAgo(secs: number): string {
+	for (const {t,s} of agoTable) {
+		if (secs >= t) {
+			const n = Math.floor(secs/t);
+			const ss = n === 1 ? s : s + 's';
+			return n + ' ' + ss + ' ago';
+		}
+	}
+
+	throw new Error('formatDaysAgo failed to format ' + secs);
+}

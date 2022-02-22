@@ -1,5 +1,6 @@
 import React from 'react';
 
+import formatDaysAgo from './formatDaysAgo';
 import formatUps from './formatUps';
 import {PostJson} from './ResultJson';
 
@@ -11,6 +12,8 @@ type Props = {
 };
 
 export default function PostListItem({post, onClick}: Props) {
+	const now = Math.round(Date.now() / 1000);
+
 	const href = '#'; // XXX
 	return (
 		<li className={Styles.item}>
@@ -22,7 +25,7 @@ export default function PostListItem({post, onClick}: Props) {
 				<div className={Styles.subtitle}>
 					{post.num_comments} comments
 					{' \u00b7 '}
-					Posted by /u/{post.author} at {post.created}
+					Posted by /u/{post.author} {formatDaysAgo(now - post.created)}
 				</div>
 			</div>
 		</li>
