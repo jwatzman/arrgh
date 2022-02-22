@@ -9,6 +9,8 @@ import {
 } from './AppState';
 import SelectEnum from './SelectEnum';
 
+import Styles from './Nav.module.css';
+
 type Props = {
 	setViewConfig: (s: ViewConfig) => void,
 };
@@ -53,7 +55,7 @@ export default function Nav({setViewConfig}: Props) {
 		: null;
 
 	return (
-		<form onSubmit={submit}>
+		<form className={Styles.nav} onSubmit={submit}>
 			<label>
 				/r/
 				<input type="text" value={subreddit} onChange={changeSubreddit} />
