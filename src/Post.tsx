@@ -16,8 +16,9 @@ export default function Post({onClickClose}: Props) {
 	const href = '#'; // XXX
 	return (
 		<div>
-			<div>{post.title}</div>
+			<h1>{post.title}</h1>
 			<div>{post.selftext}</div>
+			<h2>Comments</h2>
 			<Comments />
 			<div><a href={href} onClick={onClickClose}>Close</a></div>
 		</div>

@@ -14,7 +14,7 @@ const agoTable = [
 	{t: 0, s: "second"},
 ];
 
-export default function formatDaysAgo(secs: number): string {
+function formatDaysAgoImpl(secs: number): string {
 	for (const {t,s} of agoTable) {
 		if (secs >= t) {
 			const n = Math.floor(secs/t);
@@ -23,5 +23,10 @@ export default function formatDaysAgo(secs: number): string {
 		}
 	}
 
-	throw new Error('formatDaysAgo failed to format ' + secs);
+	return 'formatDaysAgo failed to format ' + secs;
+}
+
+export default function formatDaysAgo(ts: number): string {
+	const now = Math.round(Date.now() / 1000);
+	return formatDaysAgoImpl(now - ts);
 }

@@ -3,12 +3,14 @@ import React from 'react';
 import Comment from './Comment';
 import {CommentJsonChild} from './ResultJson';
 
+import Styles from './CommentList.module.css';
+
 type Props = {
 	comments: CommentJsonChild[],
 };
 
 function CommentMore() {
-	return <li>(More...)</li>;
+	return <li className={Styles.more}>(More...)</li>;
 }
 
 export default function CommentList({comments}: Props) {
@@ -17,7 +19,7 @@ export default function CommentList({comments}: Props) {
 	}
 
 	return (
-		<ol>
+		<ol className={Styles.list}>
 			{comments.map(
 				c => c.kind === "more"
 					? <CommentMore key="more" />

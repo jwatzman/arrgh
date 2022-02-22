@@ -12,8 +12,6 @@ type Props = {
 };
 
 export default function PostListItem({post, onClick}: Props) {
-	const now = Math.round(Date.now() / 1000);
-
 	const href = '#'; // XXX
 	return (
 		<li className={Styles.item}>
@@ -25,7 +23,7 @@ export default function PostListItem({post, onClick}: Props) {
 				<div className={Styles.subtitle}>
 					{formatKilo(post.num_comments)} comments
 					{' \u00b7 '}
-					Posted by /u/{post.author} {formatDaysAgo(now - post.created)}
+					Posted by /u/{post.author} {formatDaysAgo(post.created)}
 				</div>
 			</div>
 		</li>
