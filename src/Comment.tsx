@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactMarkdown from 'react-markdown';
 
 import CommentList from './CommentList';
 import {CommentJson} from './ResultJson';
@@ -18,7 +19,7 @@ export default function Comment({comment}: Props) {
 
 	return (
 		<li className={Styles.item}>
-			<div>{comment.body}</div>
+			<div><ReactMarkdown>{comment.body}</ReactMarkdown></div>
 			<div className={Styles.subtitle}>
 				{formatKilo(comment.ups)}
 				{' \u00b7 '}
