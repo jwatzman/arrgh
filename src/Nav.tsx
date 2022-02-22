@@ -12,11 +12,13 @@ import SelectEnum from './SelectEnum';
 import Styles from './Nav.module.css';
 
 type Props = {
+	onClosePost: (e: React.SyntheticEvent) => void,
 	setViewConfig: (s: ViewConfig) => void,
 };
 
-export default function Nav({setViewConfig}: Props) {
-	const initViewConfig = React.useContext(AppStateContext).viewConfig;
+export default function Nav({onClosePost, setViewConfig}: Props) {
+	const appState = React.useContext(AppStateContext);
+	const initViewConfig = appState.viewConfig;
 	const [subreddit, setSubreddit] = React.useState(initViewConfig.subreddit);
 
 	const initRanking = initViewConfig.ranking;
@@ -54,30 +56,38 @@ export default function Nav({setViewConfig}: Props) {
 		/>
 		: null;
 
+	const closeHref = '#'; // XXX
+	const closeLink = appState.post === null
+		? null
+		: <div><a href={closeHref} onClick={onClosePost}>Close</a></div>;
+
 	return (
-		<form className={Styles.nav} onSubmit={submit}>
-			<label>
-				/r/
-				<input type="text" value={subreddit} onChange={changeSubreddit} />
-			</label>
-			<label>
-				Posts:
-				<SelectEnum
-					onChange={setRankingType}
-					values={Object.values(RankingType)}
-					value={rankingType}
-				/>
-			</label>
-			{selectTopTime}
-			<label>
-				Comments:
-				<SelectEnum
-					onChange={setCommentRanking}
-					values={Object.values(CommentRanking)}
-					value={commentRanking}
-				/>
-			</label>
-			<input type="submit" value="Go -->" />
-		</form>
+		<div>
+			<form className={Styles.nav} onSubmit={submit}>
+				<label>
+					/r/
+					<input type="text" value={subreddit} onChange={changeSubreddit} />
+				</label>
+				<label>
+					Posts:
+					<SelectEnum
+						onChange={setRankingType}
+						values={Object.values(RankingType)}
+						value={rankingType}
+					/>
+				</label>
+				{selectTopTime}
+				<label>
+					Comments:
+					<SelectEnum
+						onChange={setCommentRanking}
+						values={Object.values(CommentRanking)}
+						value={commentRanking}
+					/>
+				</label>
+				<input type="submit" value="Go -->" />
+			</form>
+			{closeLink}
+		</div>
 	);
 }

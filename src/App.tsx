@@ -18,15 +18,16 @@ export default function App() {
 	return (
 		<AppStateContext.Provider value={{viewConfig, post}}>
 			<div>
-				<Nav setViewConfig={setViewConfig} />
-				<hr />
-				<PostList onClickPost={setPost} />
-				<Post
-					onClickClose={e => {
+				<Nav
+					onClosePost={e => {
 						e.preventDefault();
 						setPost(null);
 					}}
+					setViewConfig={setViewConfig}
 				/>
+				<hr />
+				<PostList onClickPost={setPost} />
+				<Post />
 			</div>
 		</AppStateContext.Provider>
 	);
