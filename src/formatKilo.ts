@@ -1,4 +1,4 @@
-export default function formatUps(u: number) {
+export default function formatKilo(u: number) {
 	if (u < 1000) {
 		return u.toString();
 	} else {
