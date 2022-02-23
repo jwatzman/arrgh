@@ -3,7 +3,7 @@ import React from 'react';
 import {AppState, AppStateContext, CommentRanking} from './AppState';
 import CommentList from './CommentList';
 import {CommentListJson} from './ResultJson';
-import useFetchCachedUrl from './useFetchCachedUrl';
+import {useFetchCachedUrl} from './useFetchCachedUrl';
 
 function getCommentRankingUrlComponent(r: CommentRanking): string {
 	switch (r) {

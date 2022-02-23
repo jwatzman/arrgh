@@ -9,7 +9,7 @@ import {
 } from './AppState';
 import PostListItem from './PostListItem';
 import {PostJson, PostListJson} from './ResultJson';
-import useFetchCachedUrl from './useFetchCachedUrl';
+import {useFetchCachedUrl} from './useFetchCachedUrl';
 
 import Styles from './PostList.module.css';
 
