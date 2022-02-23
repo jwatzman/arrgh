@@ -3,6 +3,7 @@ import React from 'react';
 import {
 	AppStateContext,
 	CommentRanking,
+	defaultTopTime,
 	RankingType,
 	TopTime,
 	ViewConfig,
@@ -24,7 +25,7 @@ export default function Nav({onClosePost, setViewConfig}: Props) {
 	const initRanking = initViewConfig.ranking;
 	const [rankingType, setRankingType] = React.useState(initRanking.type);
 	const [topTime, setTopTime] = React.useState(
-		initRanking.type === RankingType.TOP ? initRanking.time : TopTime.DAY
+		initRanking.type === RankingType.TOP ? initRanking.time : defaultTopTime
 	);
 
 	const [commentRanking, setCommentRanking] =

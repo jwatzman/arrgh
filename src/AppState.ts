@@ -60,4 +60,6 @@ export const defaultAppState: AppState = {
 	post: null,
 };
 
+export const defaultTopTime = TopTime.DAY;
+
 export const AppStateContext = React.createContext(defaultAppState);

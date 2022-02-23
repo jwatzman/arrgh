@@ -1,14 +1,17 @@
 import React from 'react';
 
-import {defaultAppState, AppStateContext} from './AppState';
+import {AppStateContext} from './AppState';
 import Nav from './Nav';
 import Post from './Post';
 import PostList from './PostList';
 import {PostJson} from './ResultJson';
+import {appStateFromUrl} from './urlAppState';
 import {URLCache} from './useFetchCachedUrl';
 
 export default function App() {
-	// TODO: load, save to URL
+	const defaultAppState = appStateFromUrl();
+
+	// TODO: save to URL
 	const [viewConfig, setViewConfig] = React.useState(defaultAppState.viewConfig);
 	const [post, setPost] = React.useState<PostJson|null>(null);
 
