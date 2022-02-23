@@ -8,6 +8,8 @@ import {PostJson} from './ResultJson';
 import {appStateFromUrl} from './urlAppState';
 import {URLCache} from './useFetchCachedUrl';
 
+import Styles from './App.module.css';
+
 export default function App() {
 	const defaultAppState = appStateFromUrl();
 
@@ -18,7 +20,7 @@ export default function App() {
 	return (
 		<URLCache>
 			<AppStateContext.Provider value={{viewConfig, post}}>
-				<div>
+				<div className={Styles.main}>
 					<Nav
 						onClosePost={e => {
 							e.preventDefault();
