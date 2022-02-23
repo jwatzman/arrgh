@@ -13,6 +13,7 @@ import Styles from './App.module.css';
 export default function App() {
 	const defaultAppState = appStateFromUrl();
 
+	const [navKey, setNavKey] = React.useState(0);
 	const [viewConfig, setViewConfig] =
 		React.useState(defaultAppState.viewConfig);
 	const [post, setPost] = React.useState<PostJson|null>(null);
@@ -21,14 +22,26 @@ export default function App() {
 
 	const url = appStateToUrl(appState);
 	React.useEffect(() => {
-		window.history.pushState(null, document.title, url);
+		if (url !== window.location.href) {
+			window.history.pushState(null, document.title, url);
+		}
 	}, [url]);
+
+	React.useEffect(() => {
+		window.onpopstate = () => {
+			const {viewConfig, post} = appStateFromUrl();
+			setViewConfig(viewConfig);
+			setPost(post);
+			setNavKey(n => n+1); // Hack to force-reset Nav's hook state.
+		};
+	}, []);
 
 	return (
 		<URLCache>
 			<AppStateContext.Provider value={appState}>
 				<div className={Styles.main}>
 					<Nav
+						key={navKey}
 						onClosePost={e => {
 							e.preventDefault();
 							setPost(null);
