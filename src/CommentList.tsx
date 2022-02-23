@@ -2,16 +2,13 @@ import React from 'react';
 
 import Comment from './Comment';
 import {CommentJsonChild} from './ResultJson';
+import CommentMore from './CommentMore';
 
 import Styles from './CommentList.module.css';
 
 type Props = {
 	comments: CommentJsonChild[],
 };
-
-function CommentMore() {
-	return <li className={Styles.more}>(More...)</li>;
-}
 
 export default function CommentList({comments}: Props) {
 	if (comments.length === 0) {
