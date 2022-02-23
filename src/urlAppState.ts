@@ -23,18 +23,21 @@ const TopTimeParams = Map({
 	y: TopTime.YEAR,
 	a: TopTime.ALL,
 });
+const TopTimeParamsInv = TopTimeParams.flip();
 
 const RankingTypeParams = Map({
 	h: RankingType.HOT,
 	n: RankingType.NEW,
 	t: RankingType.TOP,
 });
+const RankingTypeParamsInv = RankingTypeParams.flip();
 
 const CommentRankingParams = Map({
 	b: CommentRanking.BEST,
 	t: CommentRanking.TOP,
 	n: CommentRanking.NEW,
 });
+const CommentRankingParamsInv = CommentRankingParams.flip();
 
 function rankingFromParams(params: URLSearchParams): Ranking|null {
 	const rankingType = RankingTypeParams.get(params.get(RANKING_TYPE) || '');
@@ -70,4 +73,33 @@ export function appStateFromUrl(): AppState {
 	}
 
 	return state;
+}
+
+export function appStateToUrl(state: AppState): string {
+	const params = new URLSearchParams();
+
+	if (state.viewConfig.subreddit !== '') {
+		params.set(SUBREDDIT, state.viewConfig.subreddit);
+	}
+
+	params.set(
+		RANKING_TYPE,
+		RankingTypeParamsInv.get(state.viewConfig.ranking.type)!
+	);
+
+	if (state.viewConfig.ranking.type === RankingType.TOP) {
+		params.set(
+			TOP_TIME,
+			TopTimeParamsInv.get(state.viewConfig.ranking.time)!
+		);
+	}
+
+	params.set(
+		COMMENT_RANKING,
+		CommentRankingParamsInv.get(state.viewConfig.commentRanking)!
+	);
+
+	const url = new URL(window.location.href);
+	url.search = params.toString();
+	return url.toString();
 }
