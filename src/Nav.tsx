@@ -9,6 +9,7 @@ import {
 	ViewConfig,
 } from './AppState';
 import SelectEnum from './SelectEnum';
+import {appStateToUrl} from './urlAppState';
 
 import Styles from './Nav.module.css';
 
@@ -57,7 +58,11 @@ export default function Nav({onClosePost, setViewConfig}: Props) {
 		/>
 		: null;
 
-	const closeHref = '#'; // XXX
+	const closeHref = appStateToUrl({
+		...appState,
+		post: null,
+	});
+
 	const closeLink = appState.post === null
 		? null
 		: <div><a href={closeHref} onClick={onClosePost}>Close</a></div>;

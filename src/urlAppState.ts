@@ -75,6 +75,15 @@ export function appStateFromUrl(): AppState {
 	return state;
 }
 
+/**
+ * This is called for two different reasons -- the root App uses it to
+ * serialise the current state to update the browser history, but also a
+ * couple of components use it to set their href on links. This means that the
+ * knowledge of "how does this link change the AppState" lives in two places,
+ * which is unfortunate. Doing routing better (or actually using a proper
+ * router) is I think the best way to fix this, but it is not worth it for
+ * such a small app IMO.
+ */
 export function appStateToUrl(state: AppState): string {
 	const params = new URLSearchParams();
 

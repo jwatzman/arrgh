@@ -1,8 +1,10 @@
 import React from 'react';
 
+import {AppStateContext} from './AppState';
 import formatDaysAgo from './formatDaysAgo';
 import formatKilo from './formatKilo';
 import {PostJson} from './ResultJson';
+import {appStateToUrl} from './urlAppState';
 
 import Styles from './PostListItem.module.css';
 
@@ -12,7 +14,12 @@ type Props = {
 };
 
 export default function PostListItem({post, onClick}: Props) {
-	const href = '#'; // XXX
+	const appState = React.useContext(AppStateContext);
+	const href = appStateToUrl({
+		...appState,
+		post: post,
+	});
+
 	return (
 		<li className={Styles.item}>
 			<div className={Styles.ups}>{formatKilo(post.ups)}</div>
