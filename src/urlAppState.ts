@@ -14,6 +14,7 @@ const SUBREDDIT = 'r';
 const RANKING_TYPE = 'rt';
 const TOP_TIME = 't';
 const COMMENT_RANKING = 'cr';
+const POST = 'p';
 
 const TopTimeParams = Map({
 	h: TopTime.HOUR,
@@ -107,6 +108,10 @@ export function appStateToUrl(state: AppState): string {
 		COMMENT_RANKING,
 		CommentRankingParamsInv.get(state.viewConfig.commentRanking)!
 	);
+
+	if (state.post !== null) {
+		params.set(POST, state.post.id);
+	}
 
 	const url = new URL(window.location.href);
 	url.search = params.toString();
