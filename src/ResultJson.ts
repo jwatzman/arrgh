@@ -42,6 +42,15 @@ export type CommentJson = {
 };
 
 export type CommentListJson = {
+	0: {
+		data: {
+			children: {
+				0: {
+					data: PostJson,
+				},
+			},
+		},
+	},
 	1: {
 		data: {
 			children: CommentJsonChild[],

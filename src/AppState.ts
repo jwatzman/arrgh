@@ -44,9 +44,20 @@ export type ViewConfig = {
 	commentRanking: CommentRanking,
 }
 
+type UnloadedPost = {
+	id: string,
+	loaded: false,
+};
+
+type LoadedPost = PostJson & {
+	loaded: true,
+};
+
+export type MaybeLoadedPost = UnloadedPost | LoadedPost;
+
 export type AppState = {
 	viewConfig: ViewConfig,
-	post: PostJson | null,
+	post: MaybeLoadedPost | null,
 }
 
 export const defaultAppState: AppState = {

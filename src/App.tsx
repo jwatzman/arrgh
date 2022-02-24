@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {AppStateContext} from './AppState';
+import {AppStateContext, MaybeLoadedPost} from './AppState';
 import Nav from './Nav';
 import Post from './Post';
 import PostList from './PostList';
@@ -16,7 +16,8 @@ export default function App() {
 	const [navKey, setNavKey] = React.useState(0);
 	const [viewConfig, setViewConfig] =
 		React.useState(defaultAppState.viewConfig);
-	const [post, setPost] = React.useState<PostJson|null>(null);
+	const [post, setPost] =
+		React.useState<MaybeLoadedPost|null>(defaultAppState.post);
 
 	const appState = {viewConfig, post};
 
@@ -36,6 +37,7 @@ export default function App() {
 		};
 	}, []);
 
+	const setLoadedPost = (p: PostJson) => setPost({...p, loaded: true});
 	return (
 		<URLCache>
 			<AppStateContext.Provider value={appState}>
@@ -49,8 +51,12 @@ export default function App() {
 						setViewConfig={setViewConfig}
 					/>
 					<hr />
-					<PostList onClickPost={setPost} />
-					<Post />
+					<PostList
+						onClickPost={setLoadedPost}
+					/>
+					<Post
+						onLoadPost={setLoadedPost}
+					/>
 				</div>
 			</AppStateContext.Provider>
 		</URLCache>

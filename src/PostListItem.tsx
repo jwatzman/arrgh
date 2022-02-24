@@ -17,7 +17,7 @@ export default function PostListItem({post, onClick}: Props) {
 	const appState = React.useContext(AppStateContext);
 	const href = appStateToUrl({
 		...appState,
-		post: post,
+		post: {...post, loaded: true},
 	});
 
 	return (

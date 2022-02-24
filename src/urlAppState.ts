@@ -14,7 +14,7 @@ const SUBREDDIT = 'r';
 const RANKING_TYPE = 'rt';
 const TOP_TIME = 't';
 const COMMENT_RANKING = 'cr';
-const POST = 'p';
+const POST_ID = 'p';
 
 const TopTimeParams = Map({
 	h: TopTime.HOUR,
@@ -73,6 +73,11 @@ export function appStateFromUrl(): AppState {
 		state.viewConfig.commentRanking = commentRanking;
 	}
 
+	const postId = params.get(POST_ID);
+	if (postId !== null) {
+		state.post = {loaded: false, id: postId};
+	}
+
 	return state;
 }
 
@@ -110,7 +115,7 @@ export function appStateToUrl(state: AppState): string {
 	);
 
 	if (state.post !== null) {
-		params.set(POST, state.post.id);
+		params.set(POST_ID, state.post.id);
 	}
 
 	const url = new URL(window.location.href);
