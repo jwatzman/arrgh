@@ -13,17 +13,23 @@ type Props = {
 };
 
 export default function Comment({comment}: Props) {
+	const [collapsed, setCollapsed] = React.useState(false);
+
 	const replies = comment.replies === ""
 		? null
-		: <CommentList comments={comment.replies.data.children} />;
+		: collapsed
+			? <div>[Collapsed]</div>
+			: <CommentList comments={comment.replies.data.children} />;
 
 	return (
 		<li className={Styles.item}>
-			<div><ReactMarkdown>{comment.body}</ReactMarkdown></div>
-			<div className={Styles.subtitle}>
-				{formatKilo(comment.ups)}
-				{' \u00b7 '}
-				Posted by /u/{comment.author} {formatDaysAgo(comment.created)}
+			<div onClick={_ => setCollapsed(!collapsed)}>
+				<div><ReactMarkdown>{comment.body}</ReactMarkdown></div>
+				<div className={Styles.subtitle}>
+					{formatKilo(comment.ups)}
+					{' \u00b7 '}
+					Posted by /u/{comment.author} {formatDaysAgo(comment.created)}
+				</div>
 			</div>
 			{replies}
 		</li>
