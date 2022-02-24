@@ -38,14 +38,16 @@ export default function Post({onLoadPost}: Props) {
 	const appState = React.useContext(AppStateContext);
 	const url = getRedditJsonUrl(appState);
 	const commentList = useFetchCachedUrl<CommentListJson>(url);
-
 	const post = appState.post;
+
+	React.useEffect(() => {
+		if (post !== null && !post.loaded && commentList !== null) {
+			onLoadPost(commentList[0].data.children[0].data);
+		}
+	});
+
 	if (post === null) {
 		return null;
-	}
-
-	if (post.loaded === false && commentList) {
-		onLoadPost(commentList[0].data.children[0].data);
 	}
 
 	const comments = commentList === null
