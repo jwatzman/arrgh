@@ -11,10 +11,15 @@ const agoTable = [
 	{t: SEC_IN_YEAR, s: "year"},
 	{t: SEC_IN_DAY, s: "day"},
 	{t: SEC_IN_HOUR, s: "hour"},
-	{t: 0, s: "second"},
+	{t: SEC_IN_MIN, s: "minute"},
+	{t: 1, s: "second"},
 ];
 
 function formatDaysAgoImpl(secs: number): string {
+	if (secs <= 0) {
+		return 'just now';
+	}
+
 	for (const {t,s} of agoTable) {
 		if (secs >= t) {
 			const n = Math.floor(secs/t);
