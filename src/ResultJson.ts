@@ -1,59 +1,59 @@
 export type PostJson = {
-	author: string,
-	created: number,
-	id: string,
-	num_comments: number,
-	selftext: string,
-	stickied: boolean,
-	title: string,
-	ups: number,
+	readonly author: string,
+	readonly created: number,
+	readonly id: string,
+	readonly num_comments: number,
+	readonly selftext: string,
+	readonly stickied: boolean,
+	readonly title: string,
+	readonly ups: number,
 };
 
 export type PostListJson = {
-	data: {
-		children: {
-			data: PostJson,
+	readonly data: {
+		readonly children: {
+			readonly data: PostJson,
 		}[],
 	},
 };
 
 type CommentJsonChildComment = {
-	kind: "t1",
-	data: CommentJson,
+	readonly kind: "t1",
+	readonly data: CommentJson,
 };
 
 type CommentJsonChildMore = {
-	kind: "more",
+	readonly kind: "more",
 };
 
 export type CommentJsonChild = CommentJsonChildComment | CommentJsonChildMore;
 
 export type CommentJson = {
-	author: string,
-	body: string,
-	created: number,
-	id: string,
-	replies: {
-		data: {
-			children: CommentJsonChild[],
+	readonly author: string,
+	readonly body: string,
+	readonly created: number,
+	readonly id: string,
+	readonly replies: {
+		readonly data: {
+			readonly children: CommentJsonChild[],
 		}
 	} | "",
-	ups: number,
+	readonly ups: number,
 };
 
 export type CommentListJson = {
-	0: {
-		data: {
-			children: {
-				0: {
-					data: PostJson,
+	readonly 0: {
+		readonly data: {
+			readonly children: {
+				readonly 0: {
+					readonly data: PostJson,
 				},
 			},
 		},
 	},
-	1: {
-		data: {
-			children: CommentJsonChild[],
+	readonly 1: {
+		readonly data: {
+			readonly children: CommentJsonChild[],
 		},
 	},
 };

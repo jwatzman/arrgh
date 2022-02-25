@@ -55,7 +55,10 @@ function rankingFromParams(params: URLSearchParams): Ranking|null {
 
 export function appStateFromUrl(): AppState {
 	const params = new URLSearchParams(window.location.search);
-	const state = defaultAppState;
+	const state = {
+		...defaultAppState,
+		viewConfig: {...defaultAppState.viewConfig},
+	};
 
 	const subreddit = params.get(SUBREDDIT);
 	if (subreddit) {

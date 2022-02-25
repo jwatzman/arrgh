@@ -18,16 +18,16 @@ export enum RankingType {
 }
 
 export type HotRanking = {
-	type: RankingType.HOT,
+	readonly type: RankingType.HOT,
 }
 
 export type NewRanking = {
-	type: RankingType.NEW,
+	readonly type: RankingType.NEW,
 }
 
 export type TopRanking = {
-	type: RankingType.TOP,
-	time: TopTime,
+	readonly type: RankingType.TOP,
+	readonly time: TopTime,
 }
 
 export type Ranking = HotRanking | NewRanking | TopRanking;
@@ -39,25 +39,25 @@ export enum CommentRanking {
 }
 
 export type ViewConfig = {
-	subreddit: string,
-	ranking: Ranking,
-	commentRanking: CommentRanking,
+	readonly subreddit: string,
+	readonly ranking: Ranking,
+	readonly commentRanking: CommentRanking,
 }
 
 type UnloadedPost = {
-	id: string,
-	loaded: false,
+	readonly id: string,
+	readonly loaded: false,
 };
 
 type LoadedPost = PostJson & {
-	loaded: true,
+	readonly loaded: true,
 };
 
 export type MaybeLoadedPost = UnloadedPost | LoadedPost;
 
 export type AppState = {
-	viewConfig: ViewConfig,
-	post: MaybeLoadedPost | null,
+	readonly viewConfig: ViewConfig,
+	readonly post: MaybeLoadedPost | null,
 }
 
 export const defaultAppState: AppState = {
