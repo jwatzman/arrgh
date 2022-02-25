@@ -24,7 +24,7 @@ export default function App() {
 	const url = appStateToUrl(appState);
 	React.useEffect(() => {
 		if (url !== window.location.href) {
-			window.history.pushState(null, document.title, url);
+			window.history.pushState(null, '', url);
 		}
 	}, [url]);
 
@@ -36,6 +36,14 @@ export default function App() {
 			setNavKey(n => n+1); // Hack to force-reset Nav's hook state.
 		};
 	}, []);
+
+	React.useEffect(() => {
+		if (viewConfig.subreddit === '') {
+			document.title = 'Arrgh';
+		} else {
+			document.title = 'Arrgh - /r/' + viewConfig.subreddit;
+		}
+	}, [viewConfig.subreddit]);
 
 	const setLoadedPost = (p: PostJson) => setPost({...p, loaded: true});
 	return (
