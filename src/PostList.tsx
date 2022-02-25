@@ -73,17 +73,20 @@ export default function PostList({onClickPost}: Props) {
 	}
 
 	return (
-		<ol className={Styles.list}>
-			{postList.data.children.map(
-				d => <PostListItem
-					key={d.data.id}
-					post={d.data}
-					onClick={e => {
-						e.preventDefault();
-						onClickPost(d.data);
-					}}
-				/>
-			)}
-		</ol>
+		<>
+			<h1>/r/{appState.viewConfig.subreddit}</h1>
+			<ol className={Styles.list}>
+				{postList.data.children.map(
+					d => <PostListItem
+						key={d.data.id}
+						post={d.data}
+						onClick={e => {
+							e.preventDefault();
+							onClickPost(d.data);
+						}}
+					/>
+				)}
+			</ol>
+		</>
 	);
 }
