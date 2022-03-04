@@ -2,3 +2,7 @@
 	font-family: -apple-system, Calibri, 'Open Sans', serif;
 	overflow-wrap: break-word;
 }
+
+.main pre {
+	white-space: pre-wrap;
+}
