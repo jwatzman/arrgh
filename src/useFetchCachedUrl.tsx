@@ -53,3 +53,12 @@ export function useFetchCachedUrl<T>(url: string|null): T|null {
 		return results.get(url, null);
 	}
 }
+
+export function useClearUrlCache() {
+	const {setFetchStarted, setResults} = React.useContext(Ctx)!;
+
+	return () => {
+		setFetchStarted(() => Set());
+		setResults(() => Map());
+	};
+}

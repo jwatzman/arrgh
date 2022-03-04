@@ -6,7 +6,7 @@ import Post from './Post';
 import PostList from './PostList';
 import {PostJson} from './ResultJson';
 import {appStateFromUrl, appStateToUrl} from './urlAppState';
-import {URLCache} from './useFetchCachedUrl';
+import {useClearUrlCache, URLCache} from './useFetchCachedUrl';
 
 import Styles from './App.module.css';
 
@@ -18,6 +18,8 @@ function AppImpl() {
 		React.useState(defaultAppState.viewConfig);
 	const [post, setPost] =
 		React.useState<MaybeLoadedPost|null>(defaultAppState.post);
+
+	const clearUrlCache = useClearUrlCache();
 
 	const appState = {viewConfig, post};
 
@@ -54,6 +56,16 @@ function AppImpl() {
 					onClosePost={e => {
 						e.preventDefault();
 						setPost(null);
+					}}
+					onRefresh={e => {
+						e.preventDefault();
+						if (post !== null) {
+							setPost({
+								loaded: false,
+								id: post.id,
+							});
+						}
+						clearUrlCache();
 					}}
 					setViewConfig={setViewConfig}
 				/>

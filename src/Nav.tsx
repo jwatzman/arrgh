@@ -15,10 +15,11 @@ import Styles from './Nav.module.css';
 
 type Props = {
 	onClosePost: (e: React.SyntheticEvent) => void,
+	onRefresh: (e: React.SyntheticEvent) => void,
 	setViewConfig: (s: ViewConfig) => void,
 };
 
-export default function Nav({onClosePost, setViewConfig}: Props) {
+export default function Nav({onClosePost, onRefresh, setViewConfig}: Props) {
 	const appState = React.useContext(AppStateContext);
 	const initViewConfig = appState.viewConfig;
 	const [subreddit, setSubreddit] = React.useState(initViewConfig.subreddit);
@@ -92,6 +93,9 @@ export default function Nav({onClosePost, setViewConfig}: Props) {
 					/>
 				</label>
 				<input type="submit" value="Go -->" />
+			</form>
+			<form className={Styles.nav} onSubmit={onRefresh}>
+				<input type="submit" value="Refresh" />
 			</form>
 			{closeLink}
 		</div>
