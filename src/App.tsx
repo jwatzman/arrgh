@@ -10,7 +10,7 @@ import {URLCache} from './useFetchCachedUrl';
 
 import Styles from './App.module.css';
 
-export default function App() {
+function AppImpl() {
 	const defaultAppState = appStateFromUrl();
 
 	const [navKey, setNavKey] = React.useState(0);
@@ -47,26 +47,32 @@ export default function App() {
 
 	const setLoadedPost = (p: PostJson) => setPost({...p, loaded: true});
 	return (
+		<AppStateContext.Provider value={appState}>
+			<div className={Styles.main}>
+				<Nav
+					key={navKey}
+					onClosePost={e => {
+						e.preventDefault();
+						setPost(null);
+					}}
+					setViewConfig={setViewConfig}
+				/>
+				<hr />
+				<PostList
+					onClickPost={setLoadedPost}
+				/>
+				<Post
+					onLoadPost={setLoadedPost}
+				/>
+			</div>
+		</AppStateContext.Provider>
+	);
+}
+
+export default function App() {
+	return (
 		<URLCache>
-			<AppStateContext.Provider value={appState}>
-				<div className={Styles.main}>
-					<Nav
-						key={navKey}
-						onClosePost={e => {
-							e.preventDefault();
-							setPost(null);
-						}}
-						setViewConfig={setViewConfig}
-					/>
-					<hr />
-					<PostList
-						onClickPost={setLoadedPost}
-					/>
-					<Post
-						onLoadPost={setLoadedPost}
-					/>
-				</div>
-			</AppStateContext.Provider>
+			<AppImpl />
 		</URLCache>
 	);
 }
