@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {AppStateContext, MaybeLoadedPost} from './AppState';
+import Foot from './Foot';
 import Nav from './Nav';
 import Post from './Post';
 import PostList from './PostList';
@@ -76,6 +77,7 @@ function AppImpl() {
 				<Post
 					onLoadPost={setLoadedPost}
 				/>
+				<Foot />
 			</div>
 		</AppStateContext.Provider>
 	);
