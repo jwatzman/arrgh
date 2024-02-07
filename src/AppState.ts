@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {PostJson} from './ResultJson';
+import type { PostJson } from './ResultJson';
 
 export enum TopTime {
 	HOUR = 'Hour',
@@ -18,17 +18,17 @@ export enum RankingType {
 }
 
 export type HotRanking = {
-	readonly type: RankingType.HOT,
-}
+	readonly type: RankingType.HOT;
+};
 
 export type NewRanking = {
-	readonly type: RankingType.NEW,
-}
+	readonly type: RankingType.NEW;
+};
 
 export type TopRanking = {
-	readonly type: RankingType.TOP,
-	readonly time: TopTime,
-}
+	readonly type: RankingType.TOP;
+	readonly time: TopTime;
+};
 
 export type Ranking = HotRanking | NewRanking | TopRanking;
 
@@ -39,26 +39,26 @@ export enum CommentRanking {
 }
 
 export type ViewConfig = {
-	readonly subreddit: string,
-	readonly ranking: Ranking,
-	readonly commentRanking: CommentRanking,
-}
+	readonly subreddit: string;
+	readonly ranking: Ranking;
+	readonly commentRanking: CommentRanking;
+};
 
 type UnloadedPost = {
-	readonly id: string,
-	readonly loaded: false,
+	readonly id: string;
+	readonly loaded: false;
 };
 
 type LoadedPost = PostJson & {
-	readonly loaded: true,
+	readonly loaded: true;
 };
 
 export type MaybeLoadedPost = UnloadedPost | LoadedPost;
 
 export type AppState = {
-	readonly viewConfig: ViewConfig,
-	readonly post: MaybeLoadedPost | null,
-}
+	readonly viewConfig: ViewConfig;
+	readonly post: MaybeLoadedPost | null;
+};
 
 export const defaultAppState: AppState = {
 	viewConfig: {

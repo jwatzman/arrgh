@@ -1,16 +1,16 @@
+import { css } from '@emotion/css';
 import React from 'react';
-import {css} from '@emotion/css';
 
+import type { ViewConfig } from './AppState';
 import {
 	AppStateContext,
 	CommentRanking,
-	defaultTopTime,
 	RankingType,
 	TopTime,
-	ViewConfig,
+	defaultTopTime,
 } from './AppState';
 import SelectEnum from './SelectEnum';
-import {appStateToUrl} from './urlAppState';
+import { appStateToUrl } from './urlAppState';
 
 const navStyle = css({
 	'& > *': {
@@ -24,15 +24,15 @@ const navStyle = css({
 	'& label select': {
 		marginLeft: '5px',
 	},
-})
+});
 
 type Props = {
-	onClosePost: (e: React.SyntheticEvent) => void,
-	onRefresh: (e: React.SyntheticEvent) => void,
-	setViewConfig: (s: ViewConfig) => void,
+	onClosePost: (e: React.SyntheticEvent) => void;
+	onRefresh: (e: React.SyntheticEvent) => void;
+	setViewConfig: (s: ViewConfig) => void;
 };
 
-export default function Nav({onClosePost, onRefresh, setViewConfig}: Props) {
+export default function Nav({ onClosePost, onRefresh, setViewConfig }: Props) {
 	const appState = React.useContext(AppStateContext);
 	const initViewConfig = appState.viewConfig;
 	const [subreddit, setSubreddit] = React.useState(initViewConfig.subreddit);
@@ -40,11 +40,12 @@ export default function Nav({onClosePost, onRefresh, setViewConfig}: Props) {
 	const initRanking = initViewConfig.ranking;
 	const [rankingType, setRankingType] = React.useState(initRanking.type);
 	const [topTime, setTopTime] = React.useState(
-		initRanking.type === RankingType.TOP ? initRanking.time : defaultTopTime
+		initRanking.type === RankingType.TOP ? initRanking.time : defaultTopTime,
 	);
 
-	const [commentRanking, setCommentRanking] =
-		React.useState(initViewConfig.commentRanking);
+	const [commentRanking, setCommentRanking] = React.useState(
+		initViewConfig.commentRanking,
+	);
 
 	const changeSubreddit = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setSubreddit(e.currentTarget.value);
@@ -53,9 +54,10 @@ export default function Nav({onClosePost, onRefresh, setViewConfig}: Props) {
 	const submit = (e: React.SyntheticEvent) => {
 		e.preventDefault();
 
-		const ranking = rankingType === RankingType.TOP
-			?  {type: RankingType.TOP, time: topTime}
-			: {type: rankingType};
+		const ranking =
+			rankingType === RankingType.TOP
+				? { type: RankingType.TOP, time: topTime }
+				: { type: rankingType };
 
 		setViewConfig({
 			subreddit: subreddit,
@@ -64,22 +66,28 @@ export default function Nav({onClosePost, onRefresh, setViewConfig}: Props) {
 		});
 	};
 
-	const selectTopTime = rankingType === RankingType.TOP
-		? <SelectEnum
-			onChange={setTopTime}
-			values={Object.values(TopTime)}
-			value={topTime}
-		/>
-		: null;
+	const selectTopTime =
+		rankingType === RankingType.TOP ? (
+			<SelectEnum
+				onChange={setTopTime}
+				values={Object.values(TopTime)}
+				value={topTime}
+			/>
+		) : null;
 
 	const closeHref = appStateToUrl({
 		...appState,
 		post: null,
 	});
 
-	const closeLink = appState.post === null
-		? null
-		: <div><a href={closeHref} onClick={onClosePost}>Close</a></div>;
+	const closeLink =
+		appState.post === null ? null : (
+			<div>
+				<a href={closeHref} onClick={onClosePost}>
+					Close
+				</a>
+			</div>
+		);
 
 	return (
 		<div>

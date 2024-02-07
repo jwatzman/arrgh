@@ -1,27 +1,30 @@
+import { css } from '@emotion/css';
 import React from 'react';
-import {css} from '@emotion/css';
 
-import {AppStateContext, MaybeLoadedPost} from './AppState';
+import type { MaybeLoadedPost } from './AppState';
+import { AppStateContext } from './AppState';
 import Foot from './Foot';
 import Nav from './Nav';
 import Post from './Post';
 import PostList from './PostList';
-import {PostJson} from './ResultJson';
-import {appStateFromUrl, appStateToUrl} from './urlAppState';
-import {useClearUrlCache, URLCache} from './useFetchCachedUrl';
+import type { PostJson } from './ResultJson';
+import { appStateFromUrl, appStateToUrl } from './urlAppState';
+import { URLCache, useClearUrlCache } from './useFetchCachedUrl';
 
 function AppImpl() {
 	const defaultAppState = appStateFromUrl();
 
 	const [navKey, setNavKey] = React.useState(0);
-	const [viewConfig, setViewConfig] =
-		React.useState(defaultAppState.viewConfig);
-	const [post, setPost] =
-		React.useState<MaybeLoadedPost|null>(defaultAppState.post);
+	const [viewConfig, setViewConfig] = React.useState(
+		defaultAppState.viewConfig,
+	);
+	const [post, setPost] = React.useState<MaybeLoadedPost | null>(
+		defaultAppState.post,
+	);
 
 	const clearUrlCache = useClearUrlCache();
 
-	const appState = {viewConfig, post};
+	const appState = { viewConfig, post };
 
 	const url = appStateToUrl(appState);
 	React.useEffect(() => {
@@ -32,10 +35,10 @@ function AppImpl() {
 
 	React.useEffect(() => {
 		window.onpopstate = () => {
-			const {viewConfig, post} = appStateFromUrl();
+			const { viewConfig, post } = appStateFromUrl();
 			setViewConfig(viewConfig);
 			setPost(post);
-			setNavKey(n => n+1); // Hack to force-reset Nav's hook state.
+			setNavKey((n) => n + 1); // Hack to force-reset Nav's hook state.
 		};
 	}, []);
 
@@ -47,17 +50,23 @@ function AppImpl() {
 		}
 	}, [viewConfig.subreddit]);
 
-	const setLoadedPost = (p: PostJson) => setPost({...p, loaded: true});
+	const setLoadedPost = (p: PostJson) => setPost({ ...p, loaded: true });
 	return (
 		<AppStateContext.Provider value={appState}>
-			<div className={css({fontFamily: "-apple-system, Calibri, 'Open Sans', serif", overflowWrap: 'break-word', '& pre': {whiteSpace: 'pre-wrap'}})}>
+			<div
+				className={css({
+					fontFamily: "-apple-system, Calibri, 'Open Sans', serif",
+					overflowWrap: 'break-word',
+					'& pre': { whiteSpace: 'pre-wrap' },
+				})}
+			>
 				<Nav
 					key={navKey}
-					onClosePost={e => {
+					onClosePost={(e) => {
 						e.preventDefault();
 						setPost(null);
 					}}
-					onRefresh={e => {
+					onRefresh={(e) => {
 						e.preventDefault();
 						if (post !== null) {
 							setPost({
@@ -70,12 +79,8 @@ function AppImpl() {
 					setViewConfig={setViewConfig}
 				/>
 				<hr />
-				<PostList
-					onClickPost={setLoadedPost}
-				/>
-				<Post
-					onLoadPost={setLoadedPost}
-				/>
+				<PostList onClickPost={setLoadedPost} />
+				<Post onLoadPost={setLoadedPost} />
 				<Foot />
 			</div>
 		</AppStateContext.Provider>

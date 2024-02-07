@@ -1,13 +1,12 @@
-import {Map} from 'immutable';
+import { Map } from 'immutable';
 
+import type { AppState, Ranking } from './AppState';
 import {
-	AppState,
-	defaultAppState,
-	defaultTopTime,
 	CommentRanking,
-	Ranking,
 	RankingType,
 	TopTime,
+	defaultAppState,
+	defaultTopTime,
 } from './AppState';
 
 const SUBREDDIT = 'r';
@@ -40,16 +39,16 @@ const CommentRankingParams = Map({
 });
 const CommentRankingParamsInv = CommentRankingParams.flip();
 
-function rankingFromParams(params: URLSearchParams): Ranking|null {
+function rankingFromParams(params: URLSearchParams): Ranking | null {
 	const rankingType = RankingTypeParams.get(params.get(RANKING_TYPE) || '');
 	if (!rankingType) {
 		return null;
 	} else if (rankingType === RankingType.TOP) {
 		const topTime =
 			TopTimeParams.get(params.get(TOP_TIME) || '') || defaultTopTime;
-		return {type: rankingType, time: topTime};
+		return { type: rankingType, time: topTime };
 	} else {
-		return {type: rankingType};
+		return { type: rankingType };
 	}
 }
 
@@ -57,7 +56,7 @@ export function appStateFromUrl(): AppState {
 	const params = new URLSearchParams(window.location.search);
 	const state = {
 		...defaultAppState,
-		viewConfig: {...defaultAppState.viewConfig},
+		viewConfig: { ...defaultAppState.viewConfig },
 	};
 
 	const subreddit = params.get(SUBREDDIT);
@@ -70,15 +69,16 @@ export function appStateFromUrl(): AppState {
 		state.viewConfig.ranking = ranking;
 	}
 
-	const commentRanking =
-		CommentRankingParams.get(params.get(COMMENT_RANKING) || '');
+	const commentRanking = CommentRankingParams.get(
+		params.get(COMMENT_RANKING) || '',
+	);
 	if (commentRanking) {
 		state.viewConfig.commentRanking = commentRanking;
 	}
 
 	const postId = params.get(POST_ID);
 	if (postId !== null) {
-		state.post = {loaded: false, id: postId};
+		state.post = { loaded: false, id: postId };
 	}
 
 	return state;
@@ -102,19 +102,16 @@ export function appStateToUrl(state: AppState): string {
 
 	params.set(
 		RANKING_TYPE,
-		RankingTypeParamsInv.get(state.viewConfig.ranking.type)!
+		RankingTypeParamsInv.get(state.viewConfig.ranking.type)!,
 	);
 
 	if (state.viewConfig.ranking.type === RankingType.TOP) {
-		params.set(
-			TOP_TIME,
-			TopTimeParamsInv.get(state.viewConfig.ranking.time)!
-		);
+		params.set(TOP_TIME, TopTimeParamsInv.get(state.viewConfig.ranking.time)!);
 	}
 
 	params.set(
 		COMMENT_RANKING,
-		CommentRankingParamsInv.get(state.viewConfig.commentRanking)!
+		CommentRankingParamsInv.get(state.viewConfig.commentRanking)!,
 	);
 
 	if (state.post !== null) {

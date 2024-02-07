@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 
-import {AppState, AppStateContext, CommentRanking} from './AppState';
+import type { AppState } from './AppState';
+import { AppStateContext, CommentRanking } from './AppState';
 import CommentList from './CommentList';
-import {CommentListJson, PostJson} from './ResultJson';
-import {useFetchCachedUrl} from './useFetchCachedUrl';
+import type { CommentListJson, PostJson } from './ResultJson';
+import { useFetchCachedUrl } from './useFetchCachedUrl';
 
 function getCommentRankingUrlComponent(r: CommentRanking): string {
 	switch (r) {
@@ -22,19 +23,21 @@ function getRedditJsonUrl(appState: AppState) {
 		return null;
 	}
 
-	return 'https://www.reddit.com/r/'
-		+ appState.viewConfig.subreddit
-		+ '/comments/'
-		+ appState.post.id
-		+ '.json?sort='
-		+ getCommentRankingUrlComponent(appState.viewConfig.commentRanking);
+	return (
+		'https://www.reddit.com/r/' +
+		appState.viewConfig.subreddit +
+		'/comments/' +
+		appState.post.id +
+		'.json?sort=' +
+		getCommentRankingUrlComponent(appState.viewConfig.commentRanking)
+	);
 }
 
 type Props = {
-	onLoadPost: (p: PostJson) => void,
+	onLoadPost: (p: PostJson) => void;
 };
 
-export default function Post({onLoadPost}: Props) {
+export default function Post({ onLoadPost }: Props) {
 	const appState = React.useContext(AppStateContext);
 	const url = getRedditJsonUrl(appState);
 	const commentList = useFetchCachedUrl<CommentListJson>(url);
@@ -50,16 +53,23 @@ export default function Post({onLoadPost}: Props) {
 		return null;
 	}
 
-	const comments = commentList === null
-		? <div>Loading comments...</div>
-		: <CommentList comments={commentList[1].data.children} />;
+	const comments =
+		commentList === null ? (
+			<div>Loading comments...</div>
+		) : (
+			<CommentList comments={commentList[1].data.children} />
+		);
 
-	const postBody = post.loaded
-		? <>
-				<h1>{post.title}</h1>
-				<div><ReactMarkdown>{post.selftext}</ReactMarkdown></div>
-			</>
-		: <div>Loading post...</div>;
+	const postBody = post.loaded ? (
+		<>
+			<h1>{post.title}</h1>
+			<div>
+				<ReactMarkdown>{post.selftext}</ReactMarkdown>
+			</div>
+		</>
+	) : (
+		<div>Loading post...</div>
+	);
 
 	return (
 		<div>

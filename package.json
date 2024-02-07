@@ -8,17 +8,28 @@
     "@types/node": "^16.7.13",
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.4",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
     "esbuild": "^0.20.0",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-prettier": "^5.1.3",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "immutable": "^4.0.0",
+    "prettier": "^3.2.5",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-markdown": "^8.0.0",
     "typescript": "^4.4.2"
   },
   "scripts": {
+    "lint": "eslint src",
     "_buildCore": "esbuild --bundle --platform=browser --sourcemap --target=es2020 --outfile=dist/client.js src/index.tsx",
     "dev": "tsc --watch --preserveWatchOutput & yarn _buildCore --watch --serve=3000 --servedir=dist",
-    "build": "tsc && yarn _buildCore --minify",
+    "build": "tsc && yarn lint && yarn _buildCore --minify",
     "deploy": "yarn build && aws s3 sync --delete dist/ s3://arrgh.jwatzman.org/ && aws cloudfront create-invalidation --distribution-id E2E8NRM9X59687 --paths '*'"
   }
 }

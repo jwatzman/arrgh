@@ -8,11 +8,11 @@ const SEC_IN_DAY = SEC_IN_HOUR * HOUR_IN_DAY;
 const SEC_IN_YEAR = SEC_IN_DAY * DAY_IN_YEAR;
 
 const agoTable = [
-	{t: SEC_IN_YEAR, s: "year"},
-	{t: SEC_IN_DAY, s: "day"},
-	{t: SEC_IN_HOUR, s: "hour"},
-	{t: SEC_IN_MIN, s: "minute"},
-	{t: 1, s: "second"},
+	{ t: SEC_IN_YEAR, s: 'year' },
+	{ t: SEC_IN_DAY, s: 'day' },
+	{ t: SEC_IN_HOUR, s: 'hour' },
+	{ t: SEC_IN_MIN, s: 'minute' },
+	{ t: 1, s: 'second' },
 ];
 
 function formatDaysAgoImpl(secs: number): string {
@@ -20,9 +20,9 @@ function formatDaysAgoImpl(secs: number): string {
 		return 'just now';
 	}
 
-	for (const {t,s} of agoTable) {
+	for (const { t, s } of agoTable) {
 		if (secs >= t) {
-			const n = Math.floor(secs/t);
+			const n = Math.floor(secs / t);
 			const ss = n === 1 ? s : s + 's';
 			return n + ' ' + ss + ' ago';
 		}

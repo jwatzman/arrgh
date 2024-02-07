@@ -1,19 +1,14 @@
+import { css } from '@emotion/css';
 import React from 'react';
-import {css} from '@emotion/css';
 
-import {
-	AppStateContext,
-	Ranking,
-	RankingType,
-	TopTime,
-	ViewConfig,
-} from './AppState';
+import type { Ranking, ViewConfig } from './AppState';
+import { AppStateContext, RankingType, TopTime } from './AppState';
 import PostListItem from './PostListItem';
-import {PostJson, PostListJson} from './ResultJson';
-import {useFetchCachedUrl} from './useFetchCachedUrl';
+import type { PostJson, PostListJson } from './ResultJson';
+import { useFetchCachedUrl } from './useFetchCachedUrl';
 
 type Props = {
-	onClickPost: (s: PostJson) => void,
+	onClickPost: (s: PostJson) => void;
 };
 
 function getTopTimeUrlComponent(t: TopTime): string {
@@ -49,12 +44,14 @@ function getRedditJsonUrl(viewConfig: ViewConfig) {
 		return null;
 	}
 
-	return 'https://www.reddit.com/r/'
-		+ viewConfig.subreddit
-		+ getRankingUrlComponent(viewConfig.ranking);
+	return (
+		'https://www.reddit.com/r/' +
+		viewConfig.subreddit +
+		getRankingUrlComponent(viewConfig.ranking)
+	);
 }
 
-export default function PostList({onClickPost}: Props) {
+export default function PostList({ onClickPost }: Props) {
 	const appState = React.useContext(AppStateContext);
 	const url = getRedditJsonUrl(appState.viewConfig);
 	const postList = useFetchCachedUrl<PostListJson>(url);
@@ -74,17 +71,17 @@ export default function PostList({onClickPost}: Props) {
 	return (
 		<>
 			<h1>/r/{appState.viewConfig.subreddit}</h1>
-			<ol className={css({margin: 0, padding: 0})}>
-				{postList.data.children.map(
-					d => <PostListItem
+			<ol className={css({ margin: 0, padding: 0 })}>
+				{postList.data.children.map((d) => (
+					<PostListItem
 						key={d.data.id}
 						post={d.data}
-						onClick={e => {
+						onClick={(e) => {
 							e.preventDefault();
 							onClickPost(d.data);
 						}}
 					/>
-				)}
+				))}
 			</ol>
 		</>
 	);
