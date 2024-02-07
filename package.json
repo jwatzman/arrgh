@@ -30,6 +30,6 @@
     "_buildCore": "esbuild --bundle --platform=browser --sourcemap --target=es2020 --outfile=dist/client.js src/index.tsx",
     "dev": "tsc --watch --preserveWatchOutput & yarn _buildCore --watch --serve=3000 --servedir=dist",
     "build": "tsc && yarn lint && yarn _buildCore --minify",
-    "deploy": "yarn build && aws s3 sync --delete dist/ s3://arrgh.jwatzman.org/ && aws cloudfront create-invalidation --distribution-id E2E8NRM9X59687 --paths '*'"
+    "deploy": "yarn build && aws s3 sync --delete dist/ s3://arrgh.jwatzman.org/ && aws cloudfront create-invalidation --distribution-id E2E8NRM9X59687 --paths '/*'"
   }
 }
