@@ -1,4 +1,5 @@
 import React from 'react';
+import {css} from '@emotion/css';
 
 import {AppStateContext, MaybeLoadedPost} from './AppState';
 import Foot from './Foot';
@@ -8,8 +9,6 @@ import PostList from './PostList';
 import {PostJson} from './ResultJson';
 import {appStateFromUrl, appStateToUrl} from './urlAppState';
 import {useClearUrlCache, URLCache} from './useFetchCachedUrl';
-
-import Styles from './App.module.css';
 
 function AppImpl() {
 	const defaultAppState = appStateFromUrl();
@@ -51,7 +50,7 @@ function AppImpl() {
 	const setLoadedPost = (p: PostJson) => setPost({...p, loaded: true});
 	return (
 		<AppStateContext.Provider value={appState}>
-			<div className={Styles.main}>
+			<div className={css({fontFamily: "-apple-system, Calibri, 'Open Sans', serif", overflowWrap: 'break-word', '& pre': {whiteSpace: 'pre-wrap'}})}>
 				<Nav
 					key={navKey}
 					onClosePost={e => {

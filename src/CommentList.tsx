@@ -1,10 +1,8 @@
 import React from 'react';
+import {css} from '@emotion/css';
 
 import Comment from './Comment';
 import {CommentJsonChild} from './ResultJson';
-import CommentMore from './CommentMore';
-
-import Styles from './CommentList.module.css';
 
 type Props = {
 	comments: CommentJsonChild[],
@@ -16,11 +14,14 @@ export default function CommentList({comments}: Props) {
 	}
 
 	return (
-		<ol className={Styles.list}>
+		<ol className={css({margin: 0, padding: 0, '& &': {marginLeft: '20px'}})}>
 			{comments.map(
-				c => c.kind === "more"
-					? <CommentMore key="more" />
-					: <Comment key={c.data.id} comment={c.data} />
+				c =>
+		      <li className={css({borderLeft: '1px solid grey', listStyle: 'none', margin: '10px 0', paddingLeft: '5px', '& p': {margin: '10px 0 0 0'}})}>
+				    {c.kind === "more"
+					    ? "(More...)"
+					    : <Comment key={c.data.id} comment={c.data} />}
+					</li>
 			)}
 		</ol>
 	);

@@ -1,4 +1,5 @@
 import React from 'react';
+import {css} from '@emotion/css';
 
 import {
 	AppStateContext,
@@ -10,8 +11,6 @@ import {
 import PostListItem from './PostListItem';
 import {PostJson, PostListJson} from './ResultJson';
 import {useFetchCachedUrl} from './useFetchCachedUrl';
-
-import Styles from './PostList.module.css';
 
 type Props = {
 	onClickPost: (s: PostJson) => void,
@@ -75,7 +74,7 @@ export default function PostList({onClickPost}: Props) {
 	return (
 		<>
 			<h1>/r/{appState.viewConfig.subreddit}</h1>
-			<ol className={Styles.list}>
+			<ol className={css({margin: 0, padding: 0})}>
 				{postList.data.children.map(
 					d => <PostListItem
 						key={d.data.id}

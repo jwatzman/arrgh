@@ -1,4 +1,5 @@
 import React from 'react';
+import {css} from '@emotion/css';
 
 import {
 	AppStateContext,
@@ -11,7 +12,19 @@ import {
 import SelectEnum from './SelectEnum';
 import {appStateToUrl} from './urlAppState';
 
-import Styles from './Nav.module.css';
+const navStyle = css({
+	'& > *': {
+		marginBottom: '5px',
+		marginLeft: '10px',
+		marginTop: '5px',
+	},
+	'& > *:first-child': {
+		marginLeft: 0,
+	},
+	'& label select': {
+		marginLeft: '5px',
+	},
+})
 
 type Props = {
 	onClosePost: (e: React.SyntheticEvent) => void,
@@ -70,7 +83,7 @@ export default function Nav({onClosePost, onRefresh, setViewConfig}: Props) {
 
 	return (
 		<div>
-			<form className={Styles.nav} onSubmit={submit}>
+			<form className={navStyle} onSubmit={submit}>
 				<label>
 					/r/
 					<input type="text" value={subreddit} onChange={changeSubreddit} />
@@ -94,7 +107,7 @@ export default function Nav({onClosePost, onRefresh, setViewConfig}: Props) {
 				</label>
 				<input type="submit" value="Go -->" />
 			</form>
-			<form className={Styles.nav} onSubmit={onRefresh}>
+			<form className={navStyle} onSubmit={onRefresh}>
 				<input type="submit" value="Refresh" />
 			</form>
 			{closeLink}
