@@ -1,0 +1,15 @@
+:8080 {
+	reverse_proxy /r/* https://www.reddit.com {
+		header_up Host {upstream_hostport}
+		header_up -Referer
+		header_up -X-Forwarded-For
+		header_up -X-Forwarded-Host
+		header_up -X-Forwarded-Proto
+		header_down -Set-Cookie
+		header_down -Strict-Transport-Security
+	}
+
+	file_server {
+		root dist
+	}
+}

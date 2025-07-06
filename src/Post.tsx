@@ -24,7 +24,7 @@ function getRedditJsonUrl(appState: AppState) {
 	}
 
 	return (
-		'https://www.reddit.com/r/' +
+		'/r/' +
 		appState.viewConfig.subreddit +
 		'/comments/' +
 		appState.post.id +

@@ -45,9 +45,7 @@ function getRedditJsonUrl(viewConfig: ViewConfig) {
 	}
 
 	return (
-		'https://www.reddit.com/r/' +
-		viewConfig.subreddit +
-		getRankingUrlComponent(viewConfig.ranking)
+		'/r/' + viewConfig.subreddit + getRankingUrlComponent(viewConfig.ranking)
 	);
 }
 
