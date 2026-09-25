@@ -1,11 +1,11 @@
 import { css } from '@emotion/css';
 import React from 'react';
 
-import { AppStateContext } from './AppState';
-import type { PostJson } from './ResultJson';
-import formatDaysAgo from './formatDaysAgo';
-import formatKilo from './formatKilo';
-import { appStateToUrl } from './urlAppState';
+import { AppStateContext } from '#arrgh/AppState';
+import type { PostJson } from '#arrgh/ResultJson';
+import formatDaysAgo from '#arrgh/formatDaysAgo';
+import formatKilo from '#arrgh/formatKilo';
+import { appStateToUrl } from '#arrgh/urlAppState';
 
 type Props = {
 	post: PostJson;
@@ -13,7 +13,7 @@ type Props = {
 };
 
 export default function PostListItem({ post, onClick }: Props) {
-	const appState = React.useContext(AppStateContext);
+	const appState = React.use(AppStateContext);
 	const href = appStateToUrl({
 		...appState,
 		post: { ...post, loaded: true },

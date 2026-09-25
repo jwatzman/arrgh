@@ -1,8 +1,8 @@
 import { css } from '@emotion/css';
 import React from 'react';
 
-import Comment from './Comment';
-import type { CommentJsonChild } from './ResultJson';
+import Comment from '#arrgh/Comment';
+import type { CommentJsonChild } from '#arrgh/ResultJson';
 
 type Props = {
 	comments: CommentJsonChild[];

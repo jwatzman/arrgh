@@ -2,33 +2,37 @@
   "name": "arrgh",
   "version": "0.1.0",
   "private": true,
-  "homepage": ".",
+  "imports": {
+    "#arrgh/*": "./src/*.js"
+  },
   "dependencies": {
-    "@emotion/css": "^11.11.2",
-    "@types/react": "^18.2.55",
-    "@types/react-dom": "^18.2.18",
-    "@typescript-eslint/eslint-plugin": "^8.35.1",
-    "@typescript-eslint/parser": "^8.35.1",
-    "esbuild": "^0.25.5",
-    "eslint": "^8.57.1",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-import-resolver-typescript": "^3.6.1",
-    "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-prettier": "^5.1.3",
-    "eslint-plugin-react": "^7.33.2",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "immutable": "^4.0.0",
-    "prettier": "^3.2.5",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-markdown": "^8.0.0",
-    "typescript": "^5.8.3"
+    "@emotion/css": "^11.13.5",
+    "immutable": "^4.3.9",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "react-markdown": "^10.1.0"
+  },
+  "devDependencies": {
+    "@eslint-react/eslint-plugin": "^5.20.2",
+    "@eslint/js": "^10.0.0",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "esbuild": "^0.28.2",
+    "eslint": "^10.11.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-import-resolver-typescript": "^4.4.5",
+    "eslint-plugin-import-x": "^4.17.1",
+    "eslint-plugin-no-relative-import-paths": "^1.7.3",
+    "eslint-plugin-prettier": "^5.5.5",
+    "globals": "^17.12.0",
+    "prettier": "^3.3.3",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.59.4"
   },
   "scripts": {
-    "lint": "eslint src",
-    "_buildCore": "esbuild --bundle --platform=browser --sourcemap --target=es2020 --outfile=dist/client.js src/index.tsx",
-    "dev": "tsc --watch --preserveWatchOutput & yarn _buildCore --watch --serve=3000 --servedir=dist",
-    "build": "tsc && yarn lint && yarn _buildCore --minify",
-    "deploy": "yarn build && aws s3 sync --delete dist/ s3://arrgh.jwatzman.org/ && aws cloudfront create-invalidation --distribution-id E2E8NRM9X59687 --paths '/*'"
+    "check": "tsc && eslint .",
+    "_build": "esbuild --sourcemap --bundle --target=es2024 --platform=browser --outdir=dist src/client.tsx",
+    "dev": "npm run _build -- --watch",
+    "build": "npm run _build -- --minify"
   }
 }

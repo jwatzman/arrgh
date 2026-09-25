@@ -1,15 +1,15 @@
 import { css } from '@emotion/css';
 import React from 'react';
 
-import type { MaybeLoadedPost } from './AppState';
-import { AppStateContext } from './AppState';
-import Foot from './Foot';
-import Nav from './Nav';
-import Post from './Post';
-import PostList from './PostList';
-import type { PostJson } from './ResultJson';
-import { appStateFromUrl, appStateToUrl } from './urlAppState';
-import { URLCache, useClearUrlCache } from './useFetchCachedUrl';
+import type { MaybeLoadedPost } from '#arrgh/AppState';
+import { AppStateContext } from '#arrgh/AppState';
+import Foot from '#arrgh/Foot';
+import Nav from '#arrgh/Nav';
+import Post from '#arrgh/Post';
+import PostList from '#arrgh/PostList';
+import type { PostJson } from '#arrgh/ResultJson';
+import { appStateFromUrl, appStateToUrl } from '#arrgh/urlAppState';
+import { URLCache, useClearUrlCache } from '#arrgh/useFetchCachedUrl';
 
 function AppImpl() {
 	const defaultAppState = appStateFromUrl();
@@ -35,9 +35,9 @@ function AppImpl() {
 
 	React.useEffect(() => {
 		window.onpopstate = () => {
-			const { viewConfig, post } = appStateFromUrl();
-			setViewConfig(viewConfig);
-			setPost(post);
+			const { viewConfig: newViewConfig, post: newPost } = appStateFromUrl();
+			setViewConfig(newViewConfig);
+			setPost(newPost);
 			setNavKey((n) => n + 1); // Hack to force-reset Nav's hook state.
 		};
 	}, []);
@@ -52,7 +52,7 @@ function AppImpl() {
 
 	const setLoadedPost = (p: PostJson) => setPost({ ...p, loaded: true });
 	return (
-		<AppStateContext.Provider value={appState}>
+		<AppStateContext value={appState}>
 			<div
 				className={css({
 					fontFamily: "-apple-system, Calibri, 'Open Sans', serif",
@@ -83,7 +83,7 @@ function AppImpl() {
 				<Post onLoadPost={setLoadedPost} />
 				<Foot />
 			</div>
-		</AppStateContext.Provider>
+		</AppStateContext>
 	);
 }
 

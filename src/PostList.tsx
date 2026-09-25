@@ -1,11 +1,11 @@
 import { css } from '@emotion/css';
 import React from 'react';
 
-import type { Ranking, ViewConfig } from './AppState';
-import { AppStateContext, RankingType, TopTime } from './AppState';
-import PostListItem from './PostListItem';
-import type { PostJson, PostListJson } from './ResultJson';
-import { useFetchCachedUrl } from './useFetchCachedUrl';
+import type { Ranking, ViewConfig } from '#arrgh/AppState';
+import { AppStateContext, RankingType, TopTime } from '#arrgh/AppState';
+import PostListItem from '#arrgh/PostListItem';
+import type { PostJson, PostListJson } from '#arrgh/ResultJson';
+import { useFetchCachedUrl } from '#arrgh/useFetchCachedUrl';
 
 type Props = {
 	onClickPost: (s: PostJson) => void;
@@ -50,7 +50,7 @@ function getRedditJsonUrl(viewConfig: ViewConfig) {
 }
 
 export default function PostList({ onClickPost }: Props) {
-	const appState = React.useContext(AppStateContext);
+	const appState = React.use(AppStateContext);
 	const url = getRedditJsonUrl(appState.viewConfig);
 	const postList = useFetchCachedUrl<PostListJson>(url);
 

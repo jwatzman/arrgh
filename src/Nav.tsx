@@ -1,16 +1,16 @@
 import { css } from '@emotion/css';
 import React from 'react';
 
-import type { ViewConfig } from './AppState';
+import type { ViewConfig } from '#arrgh/AppState';
 import {
 	AppStateContext,
 	CommentRanking,
 	RankingType,
 	TopTime,
 	defaultTopTime,
-} from './AppState';
-import SelectEnum from './SelectEnum';
-import { appStateToUrl } from './urlAppState';
+} from '#arrgh/AppState';
+import SelectEnum from '#arrgh/SelectEnum';
+import { appStateToUrl } from '#arrgh/urlAppState';
 
 const navStyle = css({
 	'& > *': {
@@ -33,7 +33,7 @@ type Props = {
 };
 
 export default function Nav({ onClosePost, onRefresh, setViewConfig }: Props) {
-	const appState = React.useContext(AppStateContext);
+	const appState = React.use(AppStateContext);
 	const initViewConfig = appState.viewConfig;
 	const [subreddit, setSubreddit] = React.useState(initViewConfig.subreddit);
 

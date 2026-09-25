@@ -1,42 +1,46 @@
 import React from 'react';
 
-import type { PostJson } from './ResultJson';
+import type { PostJson } from '#arrgh/ResultJson';
 
-export enum TopTime {
-	HOUR = 'Hour',
-	DAY = 'Day',
-	WEEK = 'Week',
-	MONTH = 'Month',
-	YEAR = 'Year',
-	ALL = 'All',
-}
+export const TopTime = {
+	HOUR: 'Hour',
+	DAY: 'Day',
+	WEEK: 'Week',
+	MONTH: 'Month',
+	YEAR: 'Year',
+	ALL: 'All',
+} as const;
+export type TopTime = (typeof TopTime)[keyof typeof TopTime];
 
-export enum RankingType {
-	HOT = 'Hot',
-	NEW = 'New',
-	TOP = 'Top',
-}
+export const RankingType = {
+	HOT: 'Hot',
+	NEW: 'New',
+	TOP: 'Top',
+} as const;
+export type RankingType = (typeof RankingType)[keyof typeof RankingType];
 
 export type HotRanking = {
-	readonly type: RankingType.HOT;
+	readonly type: typeof RankingType.HOT;
 };
 
 export type NewRanking = {
-	readonly type: RankingType.NEW;
+	readonly type: typeof RankingType.NEW;
 };
 
 export type TopRanking = {
-	readonly type: RankingType.TOP;
+	readonly type: typeof RankingType.TOP;
 	readonly time: TopTime;
 };
 
 export type Ranking = HotRanking | NewRanking | TopRanking;
 
-export enum CommentRanking {
-	BEST = 'Best',
-	TOP = 'Top',
-	NEW = 'New',
-}
+export const CommentRanking = {
+	BEST: 'Best',
+	TOP: 'Top',
+	NEW: 'New',
+} as const;
+export type CommentRanking =
+	(typeof CommentRanking)[keyof typeof CommentRanking];
 
 export type ViewConfig = {
 	readonly subreddit: string;

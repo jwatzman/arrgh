@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 
-import type { AppState } from './AppState';
-import { AppStateContext, CommentRanking } from './AppState';
-import CommentList from './CommentList';
-import type { CommentListJson, PostJson } from './ResultJson';
-import { useFetchCachedUrl } from './useFetchCachedUrl';
+import type { AppState } from '#arrgh/AppState';
+import { AppStateContext, CommentRanking } from '#arrgh/AppState';
+import CommentList from '#arrgh/CommentList';
+import type { CommentListJson, PostJson } from '#arrgh/ResultJson';
+import { useFetchCachedUrl } from '#arrgh/useFetchCachedUrl';
 
 function getCommentRankingUrlComponent(r: CommentRanking): string {
 	switch (r) {
@@ -38,7 +38,7 @@ type Props = {
 };
 
 export default function Post({ onLoadPost }: Props) {
-	const appState = React.useContext(AppStateContext);
+	const appState = React.use(AppStateContext);
 	const url = getRedditJsonUrl(appState);
 	const commentList = useFetchCachedUrl<CommentListJson>(url);
 	const post = appState.post;

@@ -1,13 +1,13 @@
 import { Map } from 'immutable';
 
-import type { AppState, Ranking } from './AppState';
+import type { AppState, Ranking } from '#arrgh/AppState';
 import {
 	CommentRanking,
 	RankingType,
 	TopTime,
 	defaultAppState,
 	defaultTopTime,
-} from './AppState';
+} from '#arrgh/AppState';
 
 const SUBREDDIT = 'r';
 const RANKING_TYPE = 'rt';

@@ -8,28 +8,30 @@ type CtxT = {
 	setResults: (f: (m: Map<string, any>) => Map<string, any>) => void;
 };
 
-const Ctx = React.createContext<CtxT | null>(null);
+const UrlCacheContext = React.createContext<CtxT | null>(null);
 
 type Props = {
-	children: JSX.Element;
+	children: React.JSX.Element;
 };
 
 export function URLCache({ children }: Props) {
-	const [fetchStarted, setFetchStarted] = React.useState<Set<string>>(Set());
-	const [results, setResults] = React.useState<Map<string, any>>(Map());
+	const [fetchStarted, setFetchStarted] = React.useState<Set<string>>(() =>
+		Set(),
+	);
+	const [results, setResults] = React.useState<Map<string, any>>(() => Map());
 
 	return (
-		<Ctx.Provider
+		<UrlCacheContext
 			value={{ fetchStarted, setFetchStarted, results, setResults }}
 		>
 			{children}
-		</Ctx.Provider>
+		</UrlCacheContext>
 	);
 }
 
 export function useFetchCachedUrl<T>(url: string | null): T | null {
 	const { fetchStarted, setFetchStarted, results, setResults } =
-		React.useContext(Ctx)!;
+		React.use(UrlCacheContext)!;
 
 	React.useEffect(() => {
 		if (url === null) {
@@ -42,6 +44,7 @@ export function useFetchCachedUrl<T>(url: string | null): T | null {
 
 		setFetchStarted((s) => s.add(url));
 		console.log('fetching ' + url);
+		// eslint-disable-next-line @eslint-react/web-api-no-leaked-fetch
 		fetch(url)
 			.then((r) => r.json())
 			.then((j) => setResults((m) => m.set(url, j)))
@@ -51,12 +54,12 @@ export function useFetchCachedUrl<T>(url: string | null): T | null {
 	if (url === null) {
 		return null;
 	} else {
-		return results.get(url, null);
+		return results.get(url, null) as T | null;
 	}
 }
 
 export function useClearUrlCache() {
-	const { setFetchStarted, setResults } = React.useContext(Ctx)!;
+	const { setFetchStarted, setResults } = React.use(UrlCacheContext)!;
 
 	return () => {
 		setFetchStarted(() => Set());

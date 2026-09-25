@@ -2,10 +2,10 @@ import { css } from '@emotion/css';
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 
-import CommentList from './CommentList';
-import type { CommentJson } from './ResultJson';
-import formatDaysAgo from './formatDaysAgo';
-import formatKilo from './formatKilo';
+import CommentList from '#arrgh/CommentList';
+import type { CommentJson } from '#arrgh/ResultJson';
+import formatDaysAgo from '#arrgh/formatDaysAgo';
+import formatKilo from '#arrgh/formatKilo';
 
 type Props = {
 	comment: CommentJson;
